@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="LinkIt Automation Suite" verbose="1" parallel="false">
+    <test name="Config Smoke">
+        <classes>
+            <class name="com.linkit.tests.config.TestConfigTests"/>
+        </classes>
+    </test>
+
+    <test name="Backend API Tests">
+        <classes>
+            <class name="com.linkit.tests.api.RoomApiTests"/>
+        </classes>
+    </test>
+
+    <test name="Frontend UI Tests">
+        <classes>
+            <class name="com.linkit.tests.ui.RoomUiTests"/>
+        </classes>
+    </test>
+</suite>
+

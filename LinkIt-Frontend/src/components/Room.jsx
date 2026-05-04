@@ -13,18 +13,18 @@ import { baseURL_DEV } from '../config/AxiosHelper';
 import { getContent, getParticipants, getFileNames, removeParticipant } from '../services/RoomService';
 
 const Room = () => {
-  const { id } = useParams();
+  const { roomId: urlRoomId } = useParams();
   const navigate = useNavigate();
   const { roomId, setRoomId, name, connected, setConnected, code, setCode } = useRoomContext();
   const [participants, setParticipants] = useState([]);
   const [addedFiles, setAddedFiles] = useState([]);
   const [stompClient, setStompClient] = useState(null);
 
-  const activeRoomId = roomId || id;
+  const activeRoomId = roomId || urlRoomId;
 
   useEffect(() => {
     setRoomId(activeRoomId); // Sync URL ID to context
-  }, [id]);
+  }, [urlRoomId]);
 
   // STOMP / SOCK JS CONNECTION
   useEffect(() => {
@@ -155,7 +155,7 @@ const Room = () => {
     <div className="min-h-screen flex flex-col md:flex-row text-white bg-gradient-to-br from-[#110027] to-[#1e003f]">
       <div className="md:w-1/4 w-full p-6 bg-white/10 backdrop-blur-md border-r border-white/20">
         <h2 className="text-2xl font-bold mb-4">👥 Participants</h2>
-        <ul className="space-y-2 mb-6">
+        <ul data-testid="participants-list" className="space-y-2 mb-6">
           {participants.map((name, idx) => (
             <li key={idx} className="bg-white/10 p-2 rounded text-violet-200">
               {name}
@@ -164,6 +164,7 @@ const Room = () => {
         </ul>
         <button
           onClick={handleCopyRoomId}
+          data-testid="copy-room-id-btn"
           className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded text-white text-sm flex items-center justify-center gap-2"
         >
           <Share2 size={16} /> Copy Room ID
@@ -176,13 +177,14 @@ const Room = () => {
             <h1 className="text-2xl font-semibold">📝 Collaborative Code Editor</h1>
             {activeRoomId && (
               <span className="text-sm bg-white/10 px-3 py-1 rounded-full text-violet-300 border border-violet-500">
-                Room ID: <span className="font-mono font-semibold text-base">{activeRoomId}</span>
+                Room ID: <span data-testid="room-id-badge" className="font-mono font-semibold text-base">{activeRoomId}</span>
               </span>
             )}
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <button
               onClick={handleCopyCode}
+              data-testid="copy-code-btn"
               className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-md"
             >
               <ClipboardCopy size={18} /> Copy Code
@@ -191,6 +193,7 @@ const Room = () => {
         </div>
 
         <div className="rounded-md overflow-hidden border border-white/10">
+          <div data-testid="editor-container">
           <CodeMirror
             value={typeof code === 'string' ? code : ''}
             height="500px"
@@ -198,6 +201,7 @@ const Room = () => {
             onChange={handleCodeChange}
             theme="dark"
           />
+          </div>
         </div>
 
         {addedFiles.length > 0 && (

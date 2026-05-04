@@ -109,12 +109,14 @@ const HomePage = () => {
             <div className="flex gap-2 mb-4">
               <button
                 onClick={() => setActiveTab('join')}
+                data-testid="join-tab-btn"
                 className={`w-full py-2 rounded-md font-medium ${activeTab === 'join' ? 'bg-white/20 text-white' : 'bg-white/5 text-violet-300 hover:bg-white/10'}`}
               >
                 ⏎ Join Clipboard
               </button>
               <button
                 onClick={() => setActiveTab('create')}
+                data-testid="create-tab-btn"
                 className={`w-full py-2 rounded-md font-medium ${activeTab === 'create' ? 'bg-white/20 text-white' : 'bg-white/5 text-violet-300 hover:bg-white/10'}`}
               >
                 ＋ Create Clipboard
@@ -127,6 +129,7 @@ const HomePage = () => {
                 <label className="block text-sm text-violet-200 mb-1">Your Name</label>
                 <input
                   type="text"
+                  data-testid="name-input"
                   className="w-full px-4 py-2 rounded-md bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
                   placeholder="Enter your name"
                   value={name}
@@ -139,6 +142,7 @@ const HomePage = () => {
                   <label className="block text-sm text-violet-200 mb-1">Room ID</label>
                   <input
                     type="text"
+                    data-testid="room-id-input"
                     className="w-full px-4 py-2 rounded-md bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
                     placeholder="Enter Room ID"
                     value={roomId}
@@ -149,6 +153,7 @@ const HomePage = () => {
               )}
               <button
                 type="submit"
+                data-testid={activeTab === 'create' ? 'create-room-btn' : 'join-room-btn'}
                 className={`w-full py-2 rounded-md font-semibold text-white ${
                   activeTab === 'create'
                     ? 'bg-green-500 hover:bg-green-600'
